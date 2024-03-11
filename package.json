@@ -4,6 +4,7 @@
 	"source": "src/index.html",
 	"scripts": {
 		"start": "parcel --open",
+		"prebuild": "rm -rf dist",
 		"build": "parcel build"
 	},
 	"keywords": [],
