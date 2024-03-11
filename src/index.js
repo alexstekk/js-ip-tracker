@@ -1,10 +1,19 @@
-import { validateIp } from './helpers';
+import { validateIp, addTileLayer } from './helpers';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import icon from './images/icon-location.svg';
+
 const ipInput = document.querySelector('.search-bar__input');
 const btn = document.querySelector('.search-bar__btn');
 const ipInfo = document.querySelector('#ip');
 const locationInfo = document.querySelector('#location');
 const timezoneInfo = document.querySelector('#timezone');
 const ispInfo = document.querySelector('#isp');
+
+const markerIcon = L.icon({
+	iconUrl: icon,
+	iconAnchor: [23, 56],
+});
 
 ipInput.addEventListener('keypress', handleKey);
 btn.addEventListener('click', getData);
@@ -29,3 +38,10 @@ function setInfo({ ip_address: ip, country, city, timezone: { gmt_offset: timezo
 	timezoneInfo.innerHTML = timezone;
 	ispInfo.innerText = isp_name;
 }
+
+const mapContainer = document.querySelector('.map');
+
+const map = L.map(mapContainer).setView([51.505, -0.09], 13);
+addTileLayer(map);
+
+L.marker([51.5, -0.09], { icon: markerIcon }).addTo(map);
